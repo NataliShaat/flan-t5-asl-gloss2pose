@@ -4,6 +4,19 @@ import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client@1.19.1/dist/
   "use strict";
 
   const SPACE = window.SPACE_ID;
+  const spaceOrigin = SPACE.startsWith("http")
+    ? new URL(SPACE).origin
+    : `https://${SPACE.replace("/", "-")}.hf.space`;
+  // The public Space's preflight omits Allow-Credentials, so its requests must be anonymous.
+  const fetchWithCredentials = window.fetch.bind(window);
+  window.fetch = (input, init = {}) => {
+    const url = typeof input === "string" ? input : input.url || input.toString();
+    if (new URL(url, window.location.href).origin === spaceOrigin) {
+      return fetchWithCredentials(input, { ...init, credentials: "omit" });
+    }
+    return fetchWithCredentials(input, init);
+  };
+
   const LOOP_PAUSE_MS = 600;
   const PAD = 0.06; // empty margin around the figure, as a share of the canvas
   const WIDTH = { body: 4, left_hand: 3, right_hand: 3, face: 1.5 };
