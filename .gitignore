@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Sign dictionary (downloaded during the Docker build)
+gloss2pose/
+gloss2pose.zip
+*.pose
+
+# Model weights and Hugging Face cache
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+models/
+checkpoints/
+.cache/
+
+# Notebook working folders
+NLP_Project/
+.ipynb_checkpoints/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Vercel
+.vercel/
